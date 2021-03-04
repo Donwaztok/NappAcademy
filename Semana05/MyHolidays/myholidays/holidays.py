@@ -7,23 +7,19 @@ class MyCalendar:
 
 	def add_holiday(self, *args) -> None:
 		for data in args:
-			if isinstance(data, date):
-				self.datas.append(data)
-			elif isinstance(data, str):
-				try:
-					d = datetime.strptime(data, '%d/%m/%Y').date()
-					self.datas.append(d)
-				except:
-					pass
+			d = self.validate_data(data)
+			if d:
+				self.datas.append(d)
 		self.datas = list(set(self.datas))
 
 	def check_holiday(self, data) -> bool:
-		d = None
+		return self.validate_data(data) in self.datas
+
+	def validate_data(self, data) -> date:
 		if isinstance(data, date):
-			d = data
+			return data
 		elif isinstance(data, str):
 			try:
-				d = datetime.strptime(data, '%d/%m/%Y').date()
+				return datetime.strptime(data, '%d/%m/%Y').date()
 			except:
-				pass
-		return d in self.datas
+				return None
