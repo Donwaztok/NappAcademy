@@ -36,6 +36,7 @@ class TestMyCalendar:
         strings no formato dd/MM/aaaa
         """
         objeto = MyCalendar(dt1, dt2)
+        print(f"aaa: {dt1} - {dt2}")
         assert len(objeto.datas) == tamanho_lista
         assert isinstance(objeto.datas[0], date)
 
