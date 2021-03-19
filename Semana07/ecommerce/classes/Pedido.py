@@ -6,11 +6,10 @@ class Pedido:
     formas_aceitas = ['dinheiro', 'cartão', 'pix']
 
     def __init__(self, cliente):
-        if isinstance(cliente, Cliente):
-            self._cliente = cliente
-            self._itens = []
-            return
-        raise TypeError('Não é possível instanciar um Pedido sem um cliente')
+        if not isinstance(cliente, Cliente):
+            raise TypeError('Não é possível instanciar um Pedido sem um cliente')
+        self._cliente = cliente
+        self._itens = []
 
     @property
     def itens(self):
@@ -25,16 +24,15 @@ class Pedido:
         return self._cliente
 
     def __str__(self):
-        return 'Pedido de ' + str(self._cliente)
+        return f'Pedido de {self._cliente}'
 
     def __repr__(self):
-        return 'Pedido de ' + str(self._cliente)
+        return f'Pedido de {self._cliente}'
 
     def add_item(self, produto):
-        if isinstance(produto, Produto):
-            self._itens.append(produto)
-            return
-        raise TypeError('Não foi passado um objeto produto')
+        if not isinstance(produto, Produto):
+            raise TypeError('Não foi passado um objeto produto')
+        self._itens.append(produto)
 
     def quantidade_produto_no_pedido(self, ean):
         quantidade = 0
@@ -61,9 +59,9 @@ class Pedido:
         return total_pagar
 
     def checkout(self, forma_pagamento=None):
-        if forma_pagamento is None:
+        if not forma_pagamento:
             raise Exception('Informe um meio de pagamento')
-        if forma_pagamento.lower() in self.__class__.formas_aceitas:
+        if forma_pagamento.lower() in self.formas_aceitas:
             dados_checkout = (self.nota_fiscal(), self.valor_total_pagar())
             return dados_checkout
         raise Exception('Forma de pagamento não aceita')

@@ -23,10 +23,10 @@ class Loja:
         return self.nome
 
     def __repr__(self):
-        return 'Nome da Loja => ' + self.nome
+        return f'Nome da Loja => {self.nome}'
 
     def add_estoque(self, ean, preco, quantidade):
-        for i in range(quantidade):
+        for _ in range(quantidade):
             self._estoque.append(Produto(ean=ean, preco=preco))
 
     def quantidade_produtos(self, ean):
@@ -47,6 +47,6 @@ class Loja:
         if isinstance(pedido, Pedido):
             for item in pedido.itens:
                 if isinstance(item, Produto):
-                    self._estoque.append(item)
+                    self.add_estoque(item.ean, item.preco, 1)
             pedido.itens = []
             return pedido
