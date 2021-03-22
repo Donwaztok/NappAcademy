@@ -2,9 +2,9 @@ from rh.classes.Colaborador import Colaborador
 
 
 class Departamento:
-    def __init__(self, nome_setor):
+    def __init__(self, nome_setor, nome, dia, mes, ano):
         self._nome_setor = nome_setor
-        self._responsavel = None
+        self._responsavel = Colaborador(nome, dia, mes, ano)
         self._colaboradores = []
 
     @property
@@ -33,9 +33,10 @@ class Departamento:
 
     def verificar_aniversariantes(self):
         lista = []
-        for colaborador in self.colaboradores:
+        self._colaboradores.append(self._responsavel)
+        for colaborador in self._colaboradores:
             if colaborador.aniversario_hoje():
-                lista.append((colaborador.nome, colaborador.aniversario))
+                lista.append((colaborador.nome, colaborador.aniversario, str(self)))
         return lista
 
     def __str__(self):
