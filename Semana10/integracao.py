@@ -6,6 +6,8 @@ def carregar_credenciais(arquivo):
     try:
         with open(arquivo) as file:
             for line in file:
+                if line.startswith("#") or line == "\n": # Adicionaria essas 2 linhas de código
+                    continue
                 key, valor = line.split('==>')
                 valor = valor.replace('\n', '')
                 credenciais[key] = valor
