@@ -65,3 +65,45 @@ class Estrategia_CSV(Estrategia):
 
     def nome(self):
         return 'Algoritmo CSV'
+
+
+class Estrategia_Texto1(Estrategia):
+    def execute(self, dados):
+        lista_registros = []
+        arquivo = dados['arquivo']
+        with open(arquivo, newline='\n') as txt:
+            for line in txt:
+                line = line.replace("\n","")
+                if line.startswith("Arquivo") or line.startswith("*") or line.startswith("DATA"):
+                    continue
+
+                line = line.split("       ")
+                lista_registros.append((line[4].strip(), float(line[3].strip()), line[0].strip()))
+        return lista_registros
+
+    def parametros_necessarios(self):
+        return ('algoritmo', 'arquivo')
+
+    def nome(self):
+        return 'Algoritmo Texto 1'
+
+
+class Estrategia_Texto2(Estrategia):
+    def execute(self, dados):
+        lista_registros = []
+        arquivo = dados['arquivo']
+        with open(arquivo, newline='\n') as txt:
+            for line in txt:
+                line = line.replace("\n","")
+                if line.startswith("Arquivo") or line.startswith("*") or line.startswith("DATA"):
+                    continue
+
+                line = line.split("       ")
+                lista_registros.append((line[1].strip(), float(line[2].strip()), line[0].strip()))
+        return lista_registros
+
+    def parametros_necessarios(self):
+        return ('algoritmo', 'arquivo')
+
+    def nome(self):
+        return 'Algoritmo Texto 2'
